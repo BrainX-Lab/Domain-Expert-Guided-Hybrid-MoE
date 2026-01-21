@@ -1,0 +1,9 @@
+extends:
+  - "new_inbreast_eyegaze_resnet18_moe_pretrain.yaml"
+
+exp_name: exp3_route_from_both_sparse
+
+model:
+  moe_config:
+    moe_router_type: both
+    top_k: 1

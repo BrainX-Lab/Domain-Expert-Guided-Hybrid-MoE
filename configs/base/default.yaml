@@ -1,0 +1,36 @@
+hardware:
+  device: "auto"
+  mixed_precision: true
+  gradient_accumulation_steps: 2
+  gradient_clip_val: 1.0
+
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "auc", "confusion_matrix"]
+  save_predictions: true
+  confusion_matrix: true
+  classification_report: true
+  per_class_metrics: true
+
+logging:
+  level: "INFO"
+  log_dir: "experiments/logs"
+  tensorboard: true
+  wandb:
+    enabled: false
+    # project: "medical-imaging-classification"
+    # entity: null
+
+training:
+  epochs: 150
+  learning_rate: 0.0005
+  weight_decay: 1e-4
+  scheduler: "plateau"
+  class_weights: true
+  early_stopping:
+    enabled: false
+    patience: 25
+    min_delta: 0.001
+  checkpoint:
+    save_best: true
+    save_frequency: 15
+    monitor: "val_accuracy"

@@ -1,0 +1,31 @@
+# Base configuration for ResNet models
+# This file contains ResNet-specific settings
+
+model:
+  input_channels: 1
+  num_classes: 3
+  pretrained: true
+  freeze_backbone: false
+  dropout_rate: 0
+
+resnet_variants:
+  resnet18:
+    name: "resnet18"
+    batch_size: 64
+    num_workers: 32
+    
+  resnet50:
+    name: "resnet50"
+    batch_size: 32
+    num_workers: 32
+    
+  resnet50_moe:
+    name: "resnet50"
+    batch_size: 256  # Smaller batch size for MoE models (more memory intensive)
+    num_workers: 32
+    dropout_rate: 0  # Do not use dropout for MoE
+    moe_config:
+      use_moe: true
+      num_of_expert: 4
+      top_k: 2
+      load_balance_weight: 0.01

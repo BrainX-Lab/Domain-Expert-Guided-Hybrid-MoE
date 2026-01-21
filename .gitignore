@@ -1,0 +1,7 @@
+/data/
+/experiments*/
+*.pyc
+__pycache__/
+logs
+.trash
+.vscode

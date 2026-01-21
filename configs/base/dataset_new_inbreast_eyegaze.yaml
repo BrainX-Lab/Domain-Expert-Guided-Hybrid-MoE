@@ -1,0 +1,43 @@
+# Base configuration for the updated INbreast dataset with ROI-guided patch extraction
+
+dataset:
+  name: "new_inbreast"
+  data_dir: "data/new_INbreast"
+  metadata_csv: "INbreast_new_eyegaze.csv"
+  gaze_dir: "hm_array_short"
+  image_size: [1024, 1024]
+  patch_size: [1024, 1024]
+  batch_size: 64
+  num_workers: 32
+  channels: 1  # Grayscale mammography images
+  augmentation:
+    enabled: true
+    rotation: 90
+    horizontal_flip: true
+    vertical_flip: true
+    brightness_range: [0.8, 1.2]
+    contrast_range: [0.8, 1.2]
+    elastic_transform: false
+    elastic_alpha: 600.0
+    elastic_sigma: 25.0
+    elastic_p: 0.5
+    noise_factor: 0.05
+  cross_validation:
+    enabled: false
+    metadata_csv: "INbreast_new_crossval_eyegaze.csv"
+    fold_column: "split"
+    fold_prefix: "fold"
+    folds: []
+    current_fold: null
+
+new_inbreast:
+  class_mapping:
+    normal: 0
+    benign: 1
+    malignant: 2
+  class_names: ["Normal", "Benign", "Malignant"]
+  original_size: [1024, 1024]
+  target_size: [1024, 1024]
+  grayscale: true
+  preprocessing:
+    roi_guided_random_crop: true

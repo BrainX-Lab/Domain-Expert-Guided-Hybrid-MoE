@@ -1,0 +1,51 @@
+# INbreast ResNet-18 experiment configuration
+# This config inherits from base configurations and overrides specific settings
+
+extends:
+  - "../base/dataset_new_inbreast_eyegaze.yaml"
+  - "../base/default.yaml"
+  - "../models/resnet_base.yaml"
+
+# Project-specific overrides
+dataset:
+  batch_size: 64
+  use_pretrained: true  # Enable ImageNet normalization
+  num_workers: 32
+  epoch_length: 6000
+
+# Project-specific overrides
+project:
+  name: "inbreast_resnet18_classification"
+  version: "1.0.0"
+  description: "ResNet-18 for INbreast three-class classification"
+
+# Model-specific overrides
+model:
+  name: "resnet18"
+  dropout_rate: 0
+  input_channels: 3
+  pretrained: true
+  moe_config:
+    use_moe: true
+    num_of_expert: 4
+    top_k: 4
+    load_balance_weight: 0.01
+    distillation_weight: 0.1
+    distillation_active: false
+    moe_router_type: both # image/expert/both
+
+# Training-specific overrides
+training:
+  epochs: 150
+  learning_rate: 0.0005
+  scheduler: "plateau"
+  class_weights: true
+  early_stopping:
+    enabled: false
+    
+# Logging-specific overrides
+logging:
+  log_dir: "experiments/logs/new_inbreast_resnet18"
+  wandb:
+    project: "inbreast-resnet18-classification"
+    tags: ["resnet18", "inbreast", "medical-imaging"]
